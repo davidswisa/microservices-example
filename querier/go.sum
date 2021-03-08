@@ -1,0 +1,4 @@
+github.com/rs/cors v1.7.0 h1:+88SsELBHx5r+hZ8TCkggzSstaWNbDvThkVK8H6f9ik=
+github.com/rs/cors v1.7.0/go.mod h1:gFx+x8UowdsKA9AchylcLynDq+nNFfI8FkUZdN/jGCU=
+gitswarm.f5net.com/salton/reservations v1.0.3 h1:2d/lzS6wtNOkZZ5vjD63qpCNg4c58zm5Lal2JgzPm84=
+gitswarm.f5net.com/salton/reservations v1.0.3/go.mod h1:wVdVflsESvVRWnOHGXbCwMyxAJbeilh3NWjK3LIqJIQ=

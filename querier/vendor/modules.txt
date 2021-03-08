@@ -1,0 +1,6 @@
+# github.com/rs/cors v1.7.0
+## explicit
+github.com/rs/cors
+# gitswarm.f5net.com/salton/reservations v1.0.3
+## explicit
+gitswarm.f5net.com/salton/reservations/pkg/orm

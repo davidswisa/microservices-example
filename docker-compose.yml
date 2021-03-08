@@ -1,0 +1,130 @@
+version: '3.5'
+
+networks:
+  test_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 20.10.1.0/24
+
+services:
+
+  zookeeper:
+    hostname: zookeeper
+    container_name: zookeeper
+    image: wurstmeister/zookeeper:3.4.6
+    expose:
+    - "2181"
+    ports:
+    - "2181:2181"
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.2
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    env_file:
+    - kafka-broker/kafka-variables.env
+    depends_on:
+    - zookeeper
+    ports:
+    - '9092:9092'
+    - '8082:8082'
+    - '8083:8083'
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.3
+
+  db:
+    # image: postgres
+    build: ./db
+    container_name: db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+    - '5432:5432'
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.4
+    
+  prod:
+    build: ./prod
+      # context: .
+      # dockerfile: Dockerfile-prod
+    container_name: prod
+    environment:
+      kafka: 20.10.1.3
+    restart: unless-stopped
+    # volumes:
+    #   - ./prod/index.html:/go/index.html
+    ports:
+    - '8080:8080'
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.5
+
+  cons:
+    build: ./cons
+      # context: ./cons
+      # dockerfile: Dockerfile-cons
+    container_name: cons
+    environment:
+      kafka: 20.10.1.3
+      API_HOST: 20.10.1.8
+      # API_PORT: 5431
+    restart: unless-stopped
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.6
+
+  querier:
+    build: ./querier
+    container_name: querier
+    restart: unless-stopped
+    depends_on: 
+      - discovery
+    ports:
+    - '8081:8081'
+    environment:
+      API_HOST: 20.10.1.8
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.7
+
+  orm:
+    build: ./orm
+    container_name: orm
+    restart: unless-stopped
+    depends_on:
+      - db
+      - discovery
+    ports:
+    - '5431:5431'
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.8
+
+  discovery:
+    build: ./discovery
+    container_name: discovery
+    restart: unless-stopped
+    ports:
+      - '5555:5555'
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.9
+
+  ui:
+    build: ./ui
+    container_name: ui
+    restart: unless-stopped
+    volumes:
+      - ./ui/index.html:/go/index.html
+    ports:
+    - '8084:8084'
+    networks:
+      test_network:
+        ipv4_address: 20.10.1.10

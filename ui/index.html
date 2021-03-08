@@ -1,0 +1,354 @@
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Small Salat Restaurant</title>
+</head>
+<body>
+<div class="wrapper ">
+    <!-- Image and text -->
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="./images/restaurant-circular.svg" alt="" width="30" height="24" class="d-inline-block align-top">
+          Small Salat Restaurant
+        </a>
+      </div>
+    </nav>
+    <div class="content ">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 shadow-lg p-3 mb-5 bg-body rounded">
+            
+            <h4 class="card-title fs-1">Best Restaurant Ever</h4>
+            
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-default " data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fa fa-plus-square fa-fw"></i> New order
+            </button>
+
+            <!-- <button type="button" class="btn btn-default " onclick="tableUpdate()">
+              <i class="fa fa-refresh fa-fw"></i> refresh
+            </button> -->
+            
+            <button type="button" style="display:none;" id="openUpdateFormBtn" class="btn btn-default " data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            </button>
+            
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Party</th>
+                  <th scope="col">Hour</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="tbody">
+                     
+                <tr>
+                  <th scope="row">-</th>
+                  <td>--</td>
+                  <td>--</td>
+                  <td>--</td>
+                  <td>--</td>
+                  <td>
+                    <a href="#" onclick="openUpdateForm()"><i class="fa fa-edit fa-fw" style="font-size:24px"></i></a>
+                    <a href="#" onclick="deleteOrder()"><i class="fa fa-trash-o fa-fw" style="font-size:24px"></i></a>
+                  </td>
+                </tr>
+            
+              </tbody>
+            </table>
+            
+            
+            
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Place your order</h5>
+                    <button type="button" id="create-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card">
+    
+                        <div class="card-header card-header-primary">
+                          <p class="card-category">Reservations form</p>
+                        </div>
+                        <div class="card-body">
+                        
+                            <div class="row">
+                        
+                            <form action="reservations" method="POST" name="myForm">
+                            
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="Name" placeholder="Name">
+                                  <label for="Name">Name</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="Date" placeholder="Date">
+                                  <label for="Date">Date</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                  <input type="number" class="form-control" id="Party" placeholder="Party">
+                                  <label for="Party">Party</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                  <input type="number" class="form-control" id="Hour" placeholder="Hour">
+                                  <label for="Hour">Hour</label>
+                                </div>
+
+                            </form>
+                             
+                            </div>
+                        </div> <!-- End -->
+                        
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button onclick="submitNewOrder()" class="btn btn-primary" >Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update order</h5>
+                    <button type="button" id="update-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card">
+    
+                        <div class="card-header card-header-primary">
+                          <p class="card-category">Reservations form</p>
+                        </div>
+                        <div class="card-body">
+                        
+                            <div class="row">
+                        
+                            <form action="reservations" method="POST" name="myForm">
+                            
+                                <input type="hidden" id="update-Id" name="update-Id" value="">
+                                
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="update-Name" placeholder="Name">
+                                  <label for="Name">Name</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="update-Date" placeholder="Date">
+                                  <label for="Date">Date</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                  <input type="number" class="form-control" id="update-Party" placeholder="Party">
+                                  <label for="Party">Party</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                  <input type="number" class="form-control" id="update-Hour" placeholder="Hour">
+                                  <label for="Hour">Hour</label>
+                                </div>
+
+                            </form>
+                             
+                          
+                            </div>
+                        </div> <!-- End -->
+                        
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button onclick="submitUpdateOrder()" class="btn btn-primary" >Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+              
+            </div>  
+          </div>  
+        </div>
+            
+   </div> <!-- End -->
+</div>
+</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function submitNewOrder(){
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://10.240.106.202:8080/reservations", true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        
+        var Name = document.getElementById("Name").value
+        var Date = document.getElementById("Date").value
+        var Party = document.getElementById("Party").value
+        var Hour = document.getElementById("Hour").value
+        
+        var j = {
+             "Name": Name,
+             "Date": Date,
+             "party": parseInt(Party),
+             "hour": parseInt(Hour),
+        };
+        
+        console.log( j );
+        
+        xhr.send(JSON.stringify(j));
+
+        document.getElementById("create-close").click();
+    };
+    
+    function openUpdateForm(){
+        var target = event.target;
+        var parent = target.parentElement.parentElement.parentElement;
+        var objCells = parent.cells;
+
+        document.getElementById("update-Id").value = objCells.item(0).innerHTML
+        document.getElementById("update-Name").value = objCells.item(1).innerHTML
+        document.getElementById("update-Date").value = objCells.item(2).innerHTML
+        document.getElementById("update-Party").value = objCells.item(3).innerHTML
+        document.getElementById("update-Hour").value = objCells.item(4).innerHTML
+
+        document.getElementById("openUpdateFormBtn").click()
+    };
+    
+    function deleteOrder(){
+        var target = event.target;
+        var parent = target.parentElement.parentElement.parentElement;
+        var objCells = parent.cells;
+        var Id = objCells.item(0).innerHTML
+        var xhr = new XMLHttpRequest();
+        var url = "http://10.240.106.202:8080/reservations/"+ Id;
+        xhr.open("DELETE", url, true);
+        // xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.send();
+    };
+    
+    function submitUpdateOrder(){
+        var Id = document.getElementById("update-Id").value
+        var Name = document.getElementById("update-Name").value
+        var Date = document.getElementById("update-Date").value
+        var Party = document.getElementById("update-Party").value
+        var Hour = document.getElementById("update-Hour").value
+        
+        var j = {
+             "Name": Name,
+             "Date": Date,
+             "party": parseInt(Party),
+             "hour": parseInt(Hour),
+        };
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "http://10.240.106.202:8080/reservations/"+ Id, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        
+        console.log( j );
+        xhr.send(JSON.stringify(j));
+        
+        document.getElementById("update-close").click();
+    };
+
+    function tableUpdate() {
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          // console.log(this.responseText);
+          var obj = JSON.parse(this.responseText);
+          
+          // var tblBody = document.createElement("tbody");
+          var tblBody = document.getElementById("tbody");
+          // var newTblBody = document.createElement("tbody");
+          tblBody.innerHTML = '';
+          let array = ['id', 'name', 'date', 'party', 'hour', 'op'];
+
+          for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              var item = obj[key]
+                console.log(key, item);
+
+                var row = document.createElement("tr");
+                
+
+                // Here's 4 different ways
+                for (let index = 0; index < array.length; index++) {
+                  // console.log(array[index]);
+                  var cell
+                  if(index==0){
+                    cell = document.createElement("th"); 
+                    cell.setAttribute("scope", "row");
+                  }else{
+                    cell = document.createElement("td"); 
+                  }
+                   
+                  if(index==5){
+                    a1 = document.createElement("a"); 
+                    a1.setAttribute("href", "#");
+                    a1.setAttribute("onclick", "openUpdateForm()");
+                    i1 = document.createElement("i");
+                    i1.setAttribute("class", "fa fa-edit fa-fw");
+                    i1.setAttribute("style", "font-size:24px");
+                    a1.appendChild(i1);
+                    cell.appendChild(a1);
+
+                    a2 = document.createElement("a"); 
+                    a2.setAttribute("href", "#");
+                    a2.setAttribute("onclick", "deleteOrder()");
+                    i2 = document.createElement("i");
+                    i2.setAttribute("class", "fa fa-trash-o fa-fw");
+                    i2.setAttribute("style", "font-size:24px");
+                    a2.appendChild(i2);
+                    cell.appendChild(a2);
+
+                  } else {
+                    var cellText = document.createTextNode(item[array[index]]);
+                    cell.appendChild(cellText);
+                  }
+                  
+                  
+                  row.appendChild(cell);
+                }
+                // newTblBody.appendChild(row);
+                tblBody.appendChild(row);
+            }
+
+          }
+          // tblBody.innerHTML = '';
+          // tblBody = newTblBody;
+        }
+      };
+      xhr.open("GET", "http://10.240.106.202:8081/reservations", true);
+      xhr.send();
+      
+      setTimeout(tableUpdate, 5000);
+    };
+
+    tableUpdate();
+    
+</script>
+</html>

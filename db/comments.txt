@@ -1,0 +1,20 @@
+# docker exec -it db bash
+root@704f5f532808:/# \c
+bash: c: command not found
+root@704f5f532808:/# psql -h localhost -p 5432 -U postgres -d postgres
+psql (9.4.26)
+Type "help" for help.
+
+postgres=# \c
+You are now connected to database "postgres" as user "postgres".
+postgres=# \dt
+            List of relations
+ Schema |     Name     | Type  |  Owner
+--------+--------------+-------+----------
+ public | reservations | table | postgres
+(1 row)
+
+postgres=# select * from reservations;
+ id | name | date | party | hour
+----+------+------+-------+------
+(0 rows)

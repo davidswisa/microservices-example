@@ -1,0 +1,15 @@
+docker exec -it kafka bash
+
+echo 20.10.1.2 kafka >> /etc/hosts
+
+// list all topics
+kafka-topics.sh --list --zookeeper 20.10.1.2:2181
+
+// create topic1
+kafka-topics.sh --create --zookeeper 20.10.1.2:2181 --replication-factor 1 --partitions 1 --topic topic1
+
+// produce messages
+kafka-console-producer.sh --topic topic1 --bootstrap-server localhost:9092
+
+// consume messages
+kafka-console-consumer.sh --topic topic1 --bootstrap-server localhost:9092 --from-beginning

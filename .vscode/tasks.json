@@ -1,0 +1,26 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "pre-debug-orm",
+        "type": "shell",
+        "command": "docker stop orm"
+      }
+    //   {
+    //     "label": "pre-debug-engine",
+    //     "type": "shell",
+    //     "command": "make debug-tests flags='-f\\ -de\\ -t=${input:testName}' port=50000" 
+    //   }
+    // ],
+    // "inputs": [
+    //   {
+    //       "id": "testName",
+    //       "description": "functional or behavioral test func name",
+    //       "default": "^",
+    //       "type": "promptString"
+    //   },
+    // ]
+  }
+  

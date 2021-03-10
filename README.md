@@ -2,19 +2,19 @@
 
 ## How it all work
 
+
 ```mermaid
-erDiagram
+graph TD;
 
-    GUI ||--|| Producer : "submit reservation"
-    GUI ||--|| Querier : "get data"
-    Querier ||--|| ORM : "get data"
-    Kafka ||--|| Producer : "publish reservation"
-    Kafka ||--|| Consumer : "listen to reservations"
-
-    ORM ||--|| Database : "get data"
-    Consumer ||--|| ORM : "save reservation"
-
+GUI --> Producer;
+GUI --> Querier;
+Querier --> ORM;
+Kafka --> Producer;
+Kafka --> Consumer;
+ORM --> Database;
+Consumer --> ORM;
 ```
+
 
 ## Service Table
 | Container | Port | Purpose  |
